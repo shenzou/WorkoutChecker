@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity() {
 
 
     companion object Exercices{
-        val exercicesList = mutableListOf<Exercice>()
-        val musclesList = mutableListOf<Muscle>()
+        val exercicesList = ArrayList<Exercice>()
+        val musclesList = ArrayList<Muscle>()
 
 
 
