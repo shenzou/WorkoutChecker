@@ -11,8 +11,14 @@ class Exercice(name: String, description: String, muscles: List<Muscle>, muscles
     init {
         this.name = name
         this.description = description
-        this.muscles = muscles
-        this.musclesSecond = musclesSecond
+        this.muscles = ArrayList<Muscle>()
+        for(muscle in muscles){
+            (this.muscles as ArrayList<Muscle>).add(muscle)
+        }
+        this.musclesSecond = ArrayList<Muscle>()
+        for(muscle in musclesSecond){
+            (this.musclesSecond as ArrayList<Muscle>).add(muscle)
+        }
     }
 }
 

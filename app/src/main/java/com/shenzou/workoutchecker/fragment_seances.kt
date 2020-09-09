@@ -6,21 +6,15 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
 import kotlinx.android.synthetic.main.fragment_seances.*
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
@@ -80,7 +74,6 @@ class fragment_seances : Fragment() {
             }
         }*/
         adapter = SeancesAdapter(seancesArray, view.context)
-        val dbHandler = DBManager(view.context, null)
 
         button_add?.setOnClickListener() {
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.alert_new_seance, null)
@@ -123,7 +116,9 @@ class fragment_seances : Fragment() {
                         val date = LocalDate.parse(dateSelect.text, formatter)
                     }*/
                     val seance = Seance(date, nameText.text.toString())
+                    val dbHandler = DBManager(view.context, null)
                     dbHandler.addSeance(seance)
+                    dbHandler.close()
                     populateArraySeances(it.context)
                     alertDialog.dismiss()
                 } else{
@@ -137,7 +132,7 @@ class fragment_seances : Fragment() {
         }
 
         populateArraySeances(view.context)
-        val listView = view.findViewById<ListView>(R.id.listview_seances)
+        val listView = view.findViewById<ListView>(R.id.listview_series)
         listView.adapter = adapter
         listView.setOnItemClickListener { adapterView, view, i, l ->
             val element: Seance = adapterView.getItemAtPosition(i) as Seance
@@ -156,17 +151,79 @@ class fragment_seances : Fragment() {
             seancesArray.clear()
             val seanceTitle = cursor.getColumnIndex("name")
             val seanceDate = cursor.getColumnIndex("date")
+            val seanceSeries = cursor.getColumnIndex("series")
 
+            Log.d("in populate", "ok")
             do {
                 val name = cursor.getString(seanceTitle)
                 val date = cursor.getString(seanceDate)
-                val tempSeance: Seance = Seance(parser.parse(date), name)
+                val series = cursor.getString(seanceSeries)
+
+                val tempSeance = Seance(parser.parse(date), name)
+
+                if(series.length > 11){
+                    val listSeries = series.split(
+                        delimiters = *arrayOf("NEXT"),
+                        ignoreCase = false,
+                        limit = 0
+                    )
+
+
+
+                    for(serie in listSeries){
+                        val champs = series.split(
+                            delimiters = *arrayOf(";"),
+                            ignoreCase = false,
+                            limit = 0
+                        )
+
+                        val muscles: ArrayList<Muscle> = ArrayList<Muscle>()
+
+                        val musclesNoRes = champs[3].split(
+                            delimiters = *arrayOf(","),
+                            ignoreCase = false,
+                            limit = 0
+                        )
+                        for(muscle in musclesNoRes){
+                            for(muscleComplet in MainActivity.musclesList){
+                                if(muscle.equals(muscleComplet.name)){
+                                    muscles.add(muscleComplet)
+                                }
+                            }
+                        }
+
+                        val musclesSecond: ArrayList<Muscle> = ArrayList<Muscle>()
+
+                        val musclesSecondNoRes = champs[4].split(
+                            delimiters = *arrayOf(","),
+                            ignoreCase = false,
+                            limit = 0
+                        )
+                        for(muscle in musclesSecondNoRes){
+                            for(muscleComplet in MainActivity.musclesList){
+                                if(muscle.equals(muscleComplet.name)){
+                                    musclesSecond.add(muscleComplet)
+                                }
+                            }
+                        }
+
+                        val exercice = Exercice(champs[0], champs[1], muscles, musclesSecond)
+                        exercice.videoLink = champs[2]
+
+                        val serie: Serie = Serie(exercice, champs[5].toInt())
+                        serie.poids = champs[6].toInt()
+
+                        tempSeance.AddSerie(serie)
+                    }
+                }
+
                 seancesArray.add(tempSeance)
             }
             while (cursor.moveToNext())
             cursor.close()
 
         }
+        dbHandler.close()
         adapter.notifyDataSetChanged()
     }
 

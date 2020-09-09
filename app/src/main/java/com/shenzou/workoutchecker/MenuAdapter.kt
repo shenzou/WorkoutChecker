@@ -18,6 +18,9 @@ class MenuAdapter(private val myContext: Context, fm: FragmentManager, internal 
             2 -> {
                 fragment_alimentation()
             }
+            3 -> {
+                fragment_modele()
+            }
             else -> fragment_seances()
         }
     }

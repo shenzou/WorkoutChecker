@@ -19,19 +19,29 @@
             android:id="@+id/seances"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_schedule_24"
             android:text="Séances" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/progression"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_trending_up_24"
             android:text="Progression" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/alimentation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_fastfood_24"
             android:text="Alimentation" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/seanceModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_fitness_center_24"
+            android:text="Modèle Séance" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager

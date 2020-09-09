@@ -13,13 +13,22 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
                 TABLE_NAME_SEANCES + " ("
                 + COLUMN_ID_SEANCES + " INTEGER PRIMARY KEY,"
                 + COLUMN_NAME_SEANCES_NAME + " TEXT,"
-                + COLUMN_NAME_SEANCES_DATE + " TEXT"
+                + COLUMN_NAME_SEANCES_DATE + " TEXT,"
+                + COLUMN_NAME_SEANCES_SERIES + " TEXT"
+                + ")")
+        val CREATE_MODELES_TABLE = ("CREATE TABLE IF NOT EXISTS " +
+                TABLE_NAME_MODELES + " ("
+                + COLUMN_ID_MODELES + " INTEGER PRIMARY KEY,"
+                + COLUMN_NAME_MODELES_NAME + " TEXT,"
+                + COLUMN_NAME_MODELES_SERIES + " TEXT"
                 + ")")
         db.execSQL(CREATE_SEANCES_TABLE)
+        db.execSQL(CREATE_MODELES_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_SEANCES)
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_MODELES)
         onCreate(db)
     }
 
@@ -27,22 +36,45 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
         val values = ContentValues()
         values.put(COLUMN_NAME_SEANCES_NAME, seance.name)
         values.put(COLUMN_NAME_SEANCES_DATE, seance.dateStr)
+        values.put(COLUMN_NAME_SEANCES_SERIES, seance.SeriesToString())
         val db = this.writableDatabase
         db.insert(TABLE_NAME_SEANCES, null, values)
         db.close()
     }
+
+    fun addModele(modele: ModelSeance){
+        val values = ContentValues()
+        values.put(COLUMN_NAME_MODELES_NAME, modele.name)
+        values.put(COLUMN_NAME_MODELES_SERIES, modele.SeriesToString())
+        val db = this.writableDatabase
+        db.insert(TABLE_NAME_MODELES, null, values)
+        db.close()
+    }
+
 
     fun getAllSeances(): Cursor? {
         val db = this.readableDatabase
         return db.rawQuery("SELECT * FROM $TABLE_NAME_SEANCES", null)
     }
 
+    fun getAllModeles(): Cursor? {
+        val db = this.readableDatabase
+        return db.rawQuery("SELECT * FROM $TABLE_NAME_MODELES", null)
+    }
+
     companion object {
         private val DATABASE_VERSION = 1
         private val DATABASE_NAME = "workout.db"
+
         val TABLE_NAME_SEANCES = "seances"
         val COLUMN_ID_SEANCES = "_id"
         val COLUMN_NAME_SEANCES_NAME = "name"
         val COLUMN_NAME_SEANCES_DATE = "date"
+        val COLUMN_NAME_SEANCES_SERIES = "series"
+
+        val COLUMN_ID_MODELES = "_id"
+        val COLUMN_NAME_MODELES_NAME = "name"
+        val COLUMN_NAME_MODELES_SERIES = "series"
+        val TABLE_NAME_MODELES = "modeles"
     }
 }
