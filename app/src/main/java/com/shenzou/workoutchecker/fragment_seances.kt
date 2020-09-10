@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import kotlinx.android.synthetic.main.fragment_seances.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -63,6 +64,11 @@ class fragment_seances : Fragment() {
 
         }
     }*/
+
+    override fun onResume() {
+        super.onResume()
+        context?.let { populateArraySeances(it) }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -155,65 +161,90 @@ class fragment_seances : Fragment() {
 
             Log.d("in populate", "ok")
             do {
+                Log.d("in do", "ok")
                 val name = cursor.getString(seanceTitle)
                 val date = cursor.getString(seanceDate)
                 val series = cursor.getString(seanceSeries)
+                Log.d("string series", series)
 
                 val tempSeance = Seance(parser.parse(date), name)
 
                 if(series.length > 11){
                     val listSeries = series.split(
-                        delimiters = *arrayOf("NEXT"),
+                        delimiters = *arrayOf("!"),
                         ignoreCase = false,
                         limit = 0
                     )
-
+                    Log.d("Length", listSeries.size.toString())
 
 
                     for(serie in listSeries){
-                        val champs = series.split(
-                            delimiters = *arrayOf(";"),
-                            ignoreCase = false,
-                            limit = 0
-                        )
-
-                        val muscles: ArrayList<Muscle> = ArrayList<Muscle>()
-
-                        val musclesNoRes = champs[3].split(
-                            delimiters = *arrayOf(","),
-                            ignoreCase = false,
-                            limit = 0
-                        )
-                        for(muscle in musclesNoRes){
-                            for(muscleComplet in MainActivity.musclesList){
-                                if(muscle.equals(muscleComplet.name)){
-                                    muscles.add(muscleComplet)
+                        Log.d("Serie", serie)
+                        if(serie.length>11){
+                            val champs = serie.split(
+                                delimiters = *arrayOf(";"),
+                                ignoreCase = false,
+                                limit = 0
+                            )
+                            for(champ in champs){
+                                if(champ.isNotEmpty()){
+                                    Log.d("Champ", champ)
+                                } else{
+                                    Log.d("Champ", "vide")
                                 }
+
+                            }
+
+                            val muscles: ArrayList<Muscle> = ArrayList<Muscle>()
+
+                            val musclesNoRes = champs[3].split(
+                                delimiters = *arrayOf(","),
+                                ignoreCase = false,
+                                limit = 0
+                            )
+                            for(muscle in musclesNoRes){
+                                for(muscleComplet in MainActivity.musclesList){
+                                    if(muscle.equals(muscleComplet.name)){
+                                        muscles.add(muscleComplet)
+                                    }
+                                }
+                            }
+
+                            val musclesSecond: ArrayList<Muscle> = ArrayList<Muscle>()
+
+                            val musclesSecondNoRes = champs[4].split(
+                                delimiters = *arrayOf(","),
+                                ignoreCase = false,
+                                limit = 0
+                            )
+                            for(muscle in musclesSecondNoRes){
+                                for(muscleComplet in MainActivity.musclesList){
+                                    if(muscle.equals(muscleComplet.name)){
+                                        musclesSecond.add(muscleComplet)
+                                    }
+                                }
+                            }
+
+                            val exercice = Exercice(champs[0], champs[1], muscles, musclesSecond)
+                            exercice.videoLink = champs[2]
+
+
+                            try{
+                                val newSerie = Serie(exercice, champs[5].toInt())
+                                Log.d("serie exercice n", newSerie.exercice.name)
+                                Log.d("serie reps", newSerie.reps.toString())
+                                if(champs[6].length > 1){
+                                    val poids = champs[6]
+                                    newSerie.poids = poids.toDouble()
+                                }
+                                Log.d("serie poids", newSerie.poids.toString())
+                                tempSeance.AddSerie(newSerie)
+                            } catch(e: Exception){
+                                Log.d("Exception", e.toString())
                             }
                         }
 
-                        val musclesSecond: ArrayList<Muscle> = ArrayList<Muscle>()
 
-                        val musclesSecondNoRes = champs[4].split(
-                            delimiters = *arrayOf(","),
-                            ignoreCase = false,
-                            limit = 0
-                        )
-                        for(muscle in musclesSecondNoRes){
-                            for(muscleComplet in MainActivity.musclesList){
-                                if(muscle.equals(muscleComplet.name)){
-                                    musclesSecond.add(muscleComplet)
-                                }
-                            }
-                        }
-
-                        val exercice = Exercice(champs[0], champs[1], muscles, musclesSecond)
-                        exercice.videoLink = champs[2]
-
-                        val serie: Serie = Serie(exercice, champs[5].toInt())
-                        serie.poids = champs[6].toInt()
-
-                        tempSeance.AddSerie(serie)
                     }
                 }
 

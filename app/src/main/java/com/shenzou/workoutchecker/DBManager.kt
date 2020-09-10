@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import java.util.jar.Attributes
 
 class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
@@ -42,6 +43,25 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
         db.close()
     }
 
+    fun modifySeance(seance: Seance){
+        val values = ContentValues()
+        val db = this.writableDatabase
+        //values.put(COLUMN_NAME_SEANCES_NAME, seance.name)
+        //values.put(COLUMN_NAME_SEANCES_DATE, seance.dateStr)
+        values.put(COLUMN_NAME_SEANCES_SERIES, seance.SeriesToString())
+        val strings: Array<String?> = arrayOfNulls(2)
+        strings[0] = seance.name
+        strings[1] = seance.dateStr
+        Log.d("strings0", strings[0])
+        Log.d("strings1", strings[1])
+        Log.d("seriesString", seance.SeriesToString())
+
+        val _success = db.update(TABLE_NAME_SEANCES, values,
+            "$COLUMN_NAME_SEANCES_NAME=? AND $COLUMN_NAME_SEANCES_DATE=?", strings)
+        Log.d("UPDATE", _success.toString())
+        db.close()
+    }
+
     fun addModele(modele: ModelSeance){
         val values = ContentValues()
         values.put(COLUMN_NAME_MODELES_NAME, modele.name)
@@ -54,12 +74,18 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
 
     fun getAllSeances(): Cursor? {
         val db = this.readableDatabase
-        return db.rawQuery("SELECT * FROM $TABLE_NAME_SEANCES", null)
+        return db.rawQuery(
+            "SELECT * FROM $TABLE_NAME_SEANCES",
+            null
+        )
     }
 
     fun getAllModeles(): Cursor? {
         val db = this.readableDatabase
-        return db.rawQuery("SELECT * FROM $TABLE_NAME_MODELES", null)
+        return db.rawQuery(
+            "SELECT * FROM $TABLE_NAME_MODELES",
+            null
+        )
     }
 
     companion object {

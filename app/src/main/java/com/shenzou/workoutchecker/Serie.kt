@@ -1,7 +1,9 @@
 package com.shenzou.workoutchecker
 
-class Serie(exercice: Exercice, reps: Int) {
+import java.io.Serializable
+
+class Serie(exercice: Exercice, reps: Int): Serializable {
     var exercice : Exercice = exercice
     var reps : Int = reps
-    var poids : Int = 0
+    var poids : Double = 0.0
 }

@@ -26,7 +26,7 @@ class SeriesAdapter(items: ArrayList<Serie>, ctx: Context): ArrayAdapter<Serie>(
 
         var viewHolder: SerieItemViewHolder
 
-        if(view == null){
+        /*if(view == null){
             val inflater = LayoutInflater.from(context)
             view = inflater.inflate(R.layout.item_serie_list, parent, false)
 
@@ -37,21 +37,34 @@ class SeriesAdapter(items: ArrayList<Serie>, ctx: Context): ArrayAdapter<Serie>(
             viewHolder.imageCtn = view!!.findViewById<View>(R.id.musclesImage) as ImageView
         } else {
             viewHolder = view.tag as SerieItemViewHolder
-        }
+        }*/
+
+        val inflater = LayoutInflater.from(context)
+        view = inflater.inflate(R.layout.item_serie_list, parent, false)
+
+        viewHolder = SerieItemViewHolder()
+        viewHolder.name = view!!.findViewById<View>(R.id.exerciceName) as TextView
+        viewHolder.reps = view.findViewById<View>(R.id.reps) as TextView
+        viewHolder.charge = view.findViewById<View>(R.id.charge) as TextView
+        viewHolder.imageCtn = view.findViewById<View>(R.id.musclesImage) as ImageView
 
         val serie = getItem(position)
-        viewHolder.name!!.text = serie!!.exercice!!.name
-        viewHolder.reps!!.text = serie!!.reps.toString()
-        viewHolder.charge!!.text = serie!!.poids.toString()
+        viewHolder.name!!.text = serie!!.exercice.name
+        viewHolder.reps!!.text = serie.reps.toString()
+        viewHolder.charge!!.text = serie.poids.toString()
 
         val arrayImages: ArrayList<Bitmap> = ArrayList()
-        for(muscle in serie!!.exercice!!.muscles){
+        for(muscle in serie.exercice.muscles){
             val image: Bitmap = BitmapFactory.decodeResource(context.resources, muscle.imageRes)
+            arrayImages.add(image)
+        }
+        for(muscle in serie.exercice.musclesSecond){
+            val image: Bitmap = BitmapFactory.decodeResource(context.resources, muscle.imageResSecondary)
             arrayImages.add(image)
         }
         var finalImage: Bitmap = arrayImages.get(0)
         if(arrayImages.size > 1){
-            for(i in 1 until arrayImages.size-1){
+            for(i in 1 until arrayImages.size){
                 finalImage = createSingleImageFromMultipleImages(finalImage, arrayImages.get(i))
             }
         }

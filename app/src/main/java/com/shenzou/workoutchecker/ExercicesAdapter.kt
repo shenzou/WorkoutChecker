@@ -13,7 +13,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_exercice_list.view.*
 
-class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): RecyclerView.Adapter<ViewHolder>() {
+class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): RecyclerView.Adapter<ExercicesAdapter.ViewHolder>() {
+
+    var onItemClick: ((Exercice) -> Unit)? = null
 
     override fun getItemCount(): Int {
         return items.size
@@ -64,9 +66,13 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
             val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageRes)
             arrayImages.add(image)
         }
+        for(muscle in items.get(position).musclesSecond){
+            val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageResSecondary)
+            arrayImages.add(image)
+        }
         var finalImage: Bitmap = arrayImages.get(0)
         if(arrayImages.size > 1){
-            for(i in 1 until arrayImages.size-1){
+            for(i in 1 until arrayImages.size){
                 finalImage = createSingleImageFromMultipleImages(finalImage, arrayImages.get(i))
             }
         }
@@ -81,15 +87,23 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
         canvas.drawBitmap(secondImage, 0f, 0f, null)
         return result
     }
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val name = view.exerciceName
+        val description = view.description
+        val muscles = view.muscles
+        val musclesSecond = view.musclesSecond
+        val imageCtn = view.imageView
+
+        init {
+            view.setOnClickListener {
+                onItemClick?.invoke(items[adapterPosition])
+            }
+        }
+    }
 }
 
-class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-    val name = view.exerciceName
-    val description = view.description
-    val muscles = view.muscles
-    val musclesSecond = view.musclesSecond
-    val imageCtn = view.imageView
-}
+
 
 
 /*

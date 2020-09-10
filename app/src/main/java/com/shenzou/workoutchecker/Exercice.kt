@@ -1,6 +1,8 @@
 package com.shenzou.workoutchecker
 
-class Exercice(name: String, description: String, muscles: List<Muscle>, musclesSecond: List<Muscle>) {
+import java.io.Serializable
+
+class Exercice(name: String, description: String, muscles: List<Muscle>, musclesSecond: List<Muscle>): Serializable {
     var name = ""
     var description = ""
     var videoLink = ""
