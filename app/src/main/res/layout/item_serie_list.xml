@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -16,10 +15,15 @@
 
     <TextView
         android:id="@+id/exerciceName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:lines="2"
+        android:maxLines="2"
+        android:minLines="1"
+        android:singleLine="false"
         android:text="Exercice title"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/musclesImage"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,4 +66,46 @@
         android:text=" kg"
         app:layout_constraintStart_toEndOf="@+id/charge"
         app:layout_constraintTop_toTopOf="@+id/charge" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musclesImage"
+        android:focusable="false">
+
+        <Button
+            android:id="@+id/editButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Modifier"
+            android:visibility="visible"
+            android:focusable="false"/>
+
+        <Button
+            android:id="@+id/deleteButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Supprimer"
+            android:visibility="visible"
+            android:focusable="false"/>
+
+        <Button
+            android:id="@+id/copyButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Dupliquer"
+            android:visibility="visible"
+            android:focusable="false"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import kotlinx.android.synthetic.main.item_serie_list.view.*
 import java.io.Serializable
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -43,49 +44,40 @@ class SeanceActivity : AppCompatActivity(), Serializable {
         adapter = SeriesAdapter(seance!!.listSeries, this)
         val listView = findViewById<ListView>(R.id.listview_series)
         listView.adapter = adapter
+        listView.setOnItemLongClickListener { adapterView, view, i, l ->
+
+            alertDiagEdit(i, view)
+            return@setOnItemLongClickListener(true)
+
+        }
+
         listView.setOnItemClickListener { adapterView, view, i, l ->
-            val element: Serie? = adapter.getItem(i)
-            val dialogView = LayoutInflater.from(view.context).inflate(R.layout.alert_new_serie, null)
-            val reps = dialogView.findViewById<EditText>(R.id.reps)
-            val poids = dialogView.findViewById<EditText>(R.id.poids)
-            val annuler = dialogView.findViewById<Button>(R.id.cancelButton)
-            val valider = dialogView.findViewById<Button>(R.id.validateButton)
-            val delete = dialogView.findViewById<Button>(R.id.delete)
-
-            delete.visibility = View.VISIBLE
-            valider.text = "Modifier"
-            if (element != null) {
-                reps.text.append(element.reps.toString())
+            Log.d("View", "Item clicked: "+i)
+            if(view.linearLayout.visibility == View.VISIBLE){
+                view.linearLayout.visibility = View.GONE
+            } else{
+                view.linearLayout.visibility = View.VISIBLE
             }
-            if (element != null) {
-                poids.text.append(element.poids.toString())
+            view.editButton.setOnClickListener(){
+                alertDiagEdit(i, it)
             }
-
-            val builder = AlertDialog.Builder(view.context)
-            builder.setTitle("Editer série")
-            builder.setView(dialogView)
-            val alertDialog: AlertDialog = builder.create()
-            alertDialog.show()
-
-            valider.setOnClickListener{
-                seance!!.listSeries.elementAt(i).poids = poids.text.toString().toDouble()
-                seance!!.listSeries.elementAt(i).reps = reps.text.toString().toInt()
-                adapter.notifyDataSetChanged()
-                writeToDb(seance!!)
-                alertDialog.dismiss()
-            }
-
-            annuler.setOnClickListener{
-                alertDialog.cancel()
-            }
-
-            delete.setOnClickListener{
+            view.deleteButton.setOnClickListener(){
                 seance!!.listSeries.removeAt(i)
                 adapter.notifyDataSetChanged()
                 writeToDb(seance!!)
-                alertDialog.dismiss()
             }
+            view.copyButton.setOnClickListener(){
+                seance!!.listSeries.add(seance!!.listSeries.get(i))
+                adapter.notifyDataSetChanged()
+                writeToDb(seance!!)
+            }
+            /*view.editButton.visibility = View.VISIBLE
+            view.deleteButton.visibility = View.VISIBLE
+            view.copyButton.visibility = View.VISIBLE*/
+
+
         }
+
 
         val addButton = findViewById<Button>(R.id.button_add)
         addButton.setOnClickListener(){
@@ -162,5 +154,40 @@ class SeanceActivity : AppCompatActivity(), Serializable {
         val dbHandler = DBManager(this, null)
         dbHandler.modifySeance(seance)
         dbHandler.close()
+    }
+
+    fun alertDiagEdit(i: Int, view: View){
+        val element: Serie? = adapter.getItem(i)
+        val dialogView = LayoutInflater.from(view.context).inflate(R.layout.alert_new_serie, null)
+        val reps = dialogView.findViewById<EditText>(R.id.reps)
+        val poids = dialogView.findViewById<EditText>(R.id.poids)
+        val annuler = dialogView.findViewById<Button>(R.id.cancelButton)
+        val valider = dialogView.findViewById<Button>(R.id.validateButton)
+
+        valider.text = "Modifier"
+        if (element != null) {
+            reps.text.append(element.reps.toString())
+        }
+        if (element != null) {
+            poids.text.append(element.poids.toString())
+        }
+
+        val builder = AlertDialog.Builder(view.context)
+        builder.setTitle("Editer série")
+        builder.setView(dialogView)
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
+
+        valider.setOnClickListener{
+            seance!!.listSeries.elementAt(i).poids = poids.text.toString().toDouble()
+            seance!!.listSeries.elementAt(i).reps = reps.text.toString().toInt()
+            adapter.notifyDataSetChanged()
+            writeToDb(seance!!)
+            alertDialog.dismiss()
+        }
+
+        annuler.setOnClickListener{
+            alertDialog.cancel()
+        }
     }
 }

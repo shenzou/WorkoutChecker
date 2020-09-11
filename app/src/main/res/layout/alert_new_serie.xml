@@ -62,16 +62,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/poids" />
 
-    <Button
-        android:id="@+id/delete"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Supprimer"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/cancelButton"
-        app:layout_constraintTop_toBottomOf="@+id/poids" />
-
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
