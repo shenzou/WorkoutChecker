@@ -3,22 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="140dp">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="125dp"
-        android:layout_height="100dp"
+        android:layout_width="145dp"
+        android:layout_height="125dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/muscle_full" />
 
     <TextView
         android:id="@+id/exerciceName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:lines="2"
+        android:maxLines="2"
+        android:minLines="1"
+        android:singleLine="false"
         android:text="Exercice"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,23 +52,34 @@
         android:text="Muscles secondaires: "
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toTopOf="@+id/musclesSecond" />
 
     <TextView
         android:id="@+id/muscles"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:lines="2"
+        android:maxLines="2"
+        android:minLines="1"
+        android:singleLine="false"
         android:text="Muscles"
         android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toTopOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/musclesSecond"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:lines="2"
+        android:maxLines="2"
+        android:minLines="1"
+        android:singleLine="false"
         android:text="Muscles"
         android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/muscles" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@
         android:id="@+id/musclesImage"
         android:layout_width="125dp"
         android:layout_height="100dp"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/muscle_full" />

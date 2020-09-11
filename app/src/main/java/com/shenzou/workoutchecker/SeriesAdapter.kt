@@ -54,12 +54,20 @@ class SeriesAdapter(items: ArrayList<Serie>, ctx: Context): ArrayAdapter<Serie>(
         viewHolder.charge!!.text = serie.poids.toString()
 
         val arrayImages: ArrayList<Bitmap> = ArrayList()
+
+        val requiredWidth = 125 * parent.resources.displayMetrics.density
+        var sampleSize = (1920 / requiredWidth).toInt()
+        if(sampleSize < 1) sampleSize = 1
+        val options = BitmapFactory.Options().apply {
+            inSampleSize = sampleSize
+        }
+
         for(muscle in serie.exercice.muscles){
-            val image: Bitmap = BitmapFactory.decodeResource(context.resources, muscle.imageRes)
+            val image: Bitmap = BitmapFactory.decodeResource(context.resources, muscle.imageRes, options)
             arrayImages.add(image)
         }
         for(muscle in serie.exercice.musclesSecond){
-            val image: Bitmap = BitmapFactory.decodeResource(context.resources, muscle.imageResSecondary)
+            val image: Bitmap = BitmapFactory.decodeResource(context.resources, muscle.imageResSecondary, options)
             arrayImages.add(image)
         }
         var finalImage: Bitmap = arrayImages.get(0)

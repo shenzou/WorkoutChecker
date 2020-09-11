@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_exercice_list.view.*
 
 class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): RecyclerView.Adapter<ExercicesAdapter.ViewHolder>() {
@@ -60,16 +62,38 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
             holder?.musclesSecond?.text = ""
         }
 
-
         val arrayImages: ArrayList<Bitmap> = ArrayList()
+
+        val requiredWidth = 145 * ctx.resources.displayMetrics.density
+        var sampleSize = (1920 / requiredWidth).toInt()
+        if(sampleSize < 1) sampleSize = 1
+        var options = BitmapFactory.Options().apply {
+            inSampleSize = sampleSize
+        }
+        //var index = 0
         for(muscle in items.get(position).muscles){
-            val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageRes)
+            val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageRes, options)
+            /*if(index == 0){
+                //val originalHeight = options.outHeight
+                val originalWidth = options.outWidth
+                val requiredWidth = 200 * ctx.resources.displayMetrics.density
+                var sampleSize = (originalWidth / requiredWidth).toInt()
+                if(sampleSize < 1) sampleSize = 1
+                Log.d("Size", sampleSize.toString())
+                options = BitmapFactory.Options().apply {
+                    inJustDecodeBounds = false
+                    options.inSampleSize = sampleSize
+                }
+                image = BitmapFactory.decodeResource(ctx.resources, muscle.imageRes, options)
+            }*/
             arrayImages.add(image)
+            //index++
         }
         for(muscle in items.get(position).musclesSecond){
-            val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageResSecondary)
+            val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageResSecondary, options)
             arrayImages.add(image)
         }
+
         var finalImage: Bitmap = arrayImages.get(0)
         if(arrayImages.size > 1){
             for(i in 1 until arrayImages.size){
@@ -77,7 +101,8 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
             }
         }
 
-        holder?.imageCtn?.setImageBitmap(finalImage)
+        Glide.with(ctx).load(finalImage).into(holder.imageCtn)
+        //holder?.imageCtn?.setImageBitmap(finalImage)
     }
 
     fun createSingleImageFromMultipleImages(firstImage: Bitmap, secondImage: Bitmap): Bitmap{
