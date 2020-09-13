@@ -19,33 +19,38 @@ class ModelSeance(val name: String) : Serializable{
     }
 
     fun SeriesToString(): String{
-        val series = ""
-        for(serie in listSeries){
-            series.plus(serie.exercice.name).plus(";")
-            series.plus(serie.exercice.description).plus(";")
-            series.plus(serie.exercice.videoLink).plus(";")
-            var index=0
-            for(muscle in serie.exercice.muscles){
-                if(index>0){
-                    series.plus(",")
+        var series = ""
+        if(listSeries.size>0){
+            for(serie in listSeries){
+                series += serie.exercice.name + ";"
+                series += serie.exercice.description + ";"
+                series += serie.exercice.videoLink + ";"
+                var index=0
+                for(muscle in serie.exercice.muscles){
+                    if(index>0){
+                        series += ","
+                    }
+                    series += muscle.name
+                    index++
                 }
-                series.plus(muscle.name)
-                index++
-            }
-            series.plus(";")
-            index=0
-            for(muscle in serie.exercice.musclesSecond){
-                if(index>0){
-                    series.plus(",")
+                series += ";"
+                index=0
+                for(muscle in serie.exercice.musclesSecond){
+                    if(index>0){
+                        series += ","
+                    }
+                    series += muscle.name
+                    index++
                 }
-                series.plus(muscle.name)
-                index++
+                series += ";"
+                series += serie.reps.toString() + ";"
+                series += serie.poids.toString()
+                series += "!"
             }
-            series.plus(";")
-            series.plus(serie.reps.toString()).plus(";")
-            series.plus(serie.poids.toString())
-            series.plus("NEXT")
+        } else{
+            series = ";;;;;;;!"
         }
+
         return series
     }
 
@@ -59,7 +64,7 @@ class ModelSeance(val name: String) : Serializable{
         - musclesSecond "," (comma separated) ";" 4
      - Reps ";" 5
      - Poids ";" 6
-     "NEXT"
+     "!"
      */
 
 }
