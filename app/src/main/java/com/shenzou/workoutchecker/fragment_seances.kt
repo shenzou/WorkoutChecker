@@ -12,6 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.shenzou.workoutchecker.adapters.SeancesAdapter
+import com.shenzou.workoutchecker.objects.Exercice
+import com.shenzou.workoutchecker.objects.Muscle
+import com.shenzou.workoutchecker.objects.Seance
+import com.shenzou.workoutchecker.objects.Serie
 import kotlinx.android.synthetic.main.fragment_seances.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -81,7 +86,7 @@ class fragment_seances : Fragment() {
         }*/
         adapter = SeancesAdapter(seancesArray, view.context)
 
-        button_add?.setOnClickListener() {
+        button_add?.setOnClickListener() { it ->
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.alert_new_seance, null)
             val dateSelect = dialogView.findViewById<TextView>(R.id.editTextDate)
             dateSelect.text = SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())
@@ -95,12 +100,13 @@ class fragment_seances : Fragment() {
                 val d = c.get(Calendar.DAY_OF_MONTH)
                 val dp:DatePickerDialog =
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
-                    DatePickerDialog(it.context, R.style.MySpinnerDatePickerStyle, DatePickerDialog.OnDateSetListener{view, year, monthOfYear, dayOfMonth ->
-                        dateSelect.setText(""+dayOfMonth+ "/" + monthOfYear + "/" + year)
-                    }, y, m, d)
+                    DatePickerDialog(it.context, R.style.MySpinnerDatePickerStyle,
+                        { _, year, monthOfYear, dayOfMonth ->
+                            dateSelect.text = "$dayOfMonth/$monthOfYear/$year"
+                        }, y, m, d)
                     } else{
-                        DatePickerDialog(it.context, DatePickerDialog.OnDateSetListener{view, year, monthOfYear, dayOfMonth ->
-                            dateSelect.setText(""+dayOfMonth+ "/" + monthOfYear + "/" + year)
+                        DatePickerDialog(it.context, { _, year, monthOfYear, dayOfMonth ->
+                            dateSelect.text = "$dayOfMonth/$monthOfYear/$year"
                         }, y, m, d)
                     }
 
@@ -140,7 +146,7 @@ class fragment_seances : Fragment() {
         populateArraySeances(view.context)
         val listView = view.findViewById<ListView>(R.id.listview_series)
         listView.adapter = adapter
-        listView.setOnItemClickListener { adapterView, view, i, l ->
+        listView.setOnItemClickListener { adapterView, _, i, _ ->
             val element: Seance = adapterView.getItemAtPosition(i) as Seance
             val intent = Intent(this.context, SeanceActivity::class.java)
             intent.putExtra("seance", element)
@@ -259,7 +265,7 @@ class fragment_seances : Fragment() {
     }
 
     private fun validateData(name: String):Boolean{
-        var valid:Boolean = true
+        var valid = true
         if(name.equals("")){
             valid = false
         }

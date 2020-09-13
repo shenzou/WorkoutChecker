@@ -3,20 +3,19 @@ package com.shenzou.workoutchecker
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import com.shenzou.workoutchecker.adapters.SeriesAdapter
+import com.shenzou.workoutchecker.objects.Exercice
+import com.shenzou.workoutchecker.objects.Seance
+import com.shenzou.workoutchecker.objects.Serie
 import kotlinx.android.synthetic.main.item_serie_list.view.*
 import java.io.Serializable
 import java.lang.Exception
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.*
-import kotlin.collections.ArrayList
 
 class SeanceActivity : AppCompatActivity(), Serializable {
 
@@ -44,15 +43,15 @@ class SeanceActivity : AppCompatActivity(), Serializable {
         adapter = SeriesAdapter(seance!!.listSeries, this)
         val listView = findViewById<ListView>(R.id.listview_series)
         listView.adapter = adapter
-        listView.setOnItemLongClickListener { adapterView, view, i, l ->
+        listView.setOnItemLongClickListener { _, view, i, _ ->
 
             alertDiagEdit(i, view)
             return@setOnItemLongClickListener(true)
 
         }
 
-        listView.setOnItemClickListener { adapterView, view, i, l ->
-            Log.d("View", "Item clicked: "+i)
+        listView.setOnItemClickListener { _, view, i, _ ->
+            Log.d("View", "Item clicked: $i")
             if(view.linearLayout.visibility == View.VISIBLE){
                 view.linearLayout.visibility = View.GONE
             } else{

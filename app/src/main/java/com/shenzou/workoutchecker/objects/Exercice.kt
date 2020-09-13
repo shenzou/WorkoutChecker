@@ -1,4 +1,4 @@
-package com.shenzou.workoutchecker
+package com.shenzou.workoutchecker.objects
 
 import java.io.Serializable
 

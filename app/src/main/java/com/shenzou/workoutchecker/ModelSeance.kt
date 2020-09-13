@@ -1,5 +1,6 @@
 package com.shenzou.workoutchecker
 
+import com.shenzou.workoutchecker.objects.Serie
 import java.io.Serializable
 
 class ModelSeance(val name: String) : Serializable{
@@ -18,7 +19,7 @@ class ModelSeance(val name: String) : Serializable{
     }
 
     fun SeriesToString(): String{
-        val series: String = ""
+        val series = ""
         for(serie in listSeries){
             series.plus(serie.exercice.name).plus(";")
             series.plus(serie.exercice.description).plus(";")

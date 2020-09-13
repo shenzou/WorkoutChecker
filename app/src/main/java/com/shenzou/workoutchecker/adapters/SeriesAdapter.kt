@@ -1,30 +1,30 @@
-package com.shenzou.workoutchecker
+package com.shenzou.workoutchecker.adapters
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.shenzou.workoutchecker.R
+import com.shenzou.workoutchecker.objects.Serie
 
-class SeriesAdapter(items: ArrayList<Serie>, ctx: Context): ArrayAdapter<Serie>(ctx, R.layout.item_serie_list, items) {
+class SeriesAdapter(items: ArrayList<Serie>, ctx: Context): ArrayAdapter<Serie>(ctx,
+    R.layout.item_serie_list, items) {
 
     private class SerieItemViewHolder{
-        internal var name: TextView? = null
-        internal var reps: TextView? = null
-        internal var charge: TextView? = null
-        internal var imageCtn: ImageView? = null
+        var name: TextView? = null
+        var reps: TextView? = null
+        var charge: TextView? = null
+        var imageCtn: ImageView? = null
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
-
-        var viewHolder: SerieItemViewHolder
 
         /*if(view == null){
             val inflater = LayoutInflater.from(context)
@@ -42,7 +42,7 @@ class SeriesAdapter(items: ArrayList<Serie>, ctx: Context): ArrayAdapter<Serie>(
         val inflater = LayoutInflater.from(context)
         view = inflater.inflate(R.layout.item_serie_list, parent, false)
 
-        viewHolder = SerieItemViewHolder()
+        val viewHolder = SerieItemViewHolder()
         viewHolder.name = view!!.findViewById<View>(R.id.exerciceName) as TextView
         viewHolder.reps = view.findViewById<View>(R.id.reps) as TextView
         viewHolder.charge = view.findViewById<View>(R.id.charge) as TextView
@@ -84,7 +84,7 @@ class SeriesAdapter(items: ArrayList<Serie>, ctx: Context): ArrayAdapter<Serie>(
 
     fun createSingleImageFromMultipleImages(firstImage: Bitmap, secondImage: Bitmap): Bitmap{
         val result: Bitmap = Bitmap.createBitmap(firstImage.width, firstImage.height, firstImage.config)
-        val canvas: Canvas = Canvas(result)
+        val canvas = Canvas(result)
         canvas.drawBitmap(firstImage, 0f, 0f, null)
         canvas.drawBitmap(secondImage, 0f, 0f, null)
         return result

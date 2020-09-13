@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.shenzou.workoutchecker">
+
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -8,8 +13,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".ExercicePicker"></activity>
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true">
+
+        <activity android:name=".BarcodeScanActivity"></activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+        <activity android:name=".ExercicePicker" />
         <activity android:name=".EmptyActivity" />
         <activity
             android:name=".SeanceActivity"
@@ -22,5 +34,6 @@
             </intent-filter>
         </activity>
     </application>
+
 
 </manifest>

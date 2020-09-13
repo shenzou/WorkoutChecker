@@ -6,11 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
-import android.widget.ListView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
+import com.shenzou.workoutchecker.adapters.ExercicesAdapter
+import com.shenzou.workoutchecker.objects.Exercice
 import kotlin.math.pow
 import kotlin.math.sqrt
 

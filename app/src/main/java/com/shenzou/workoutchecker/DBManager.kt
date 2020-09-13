@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import java.util.jar.Attributes
+import com.shenzou.workoutchecker.objects.Seance
 
 class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
@@ -52,8 +52,8 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
         val strings: Array<String?> = arrayOfNulls(2)
         strings[0] = seance.name
         strings[1] = seance.dateStr
-        Log.d("strings0", strings[0])
-        Log.d("strings1", strings[1])
+        strings[0]?.let { Log.d("strings0", it) }
+        strings[1]?.let { Log.d("strings1", it) }
         Log.d("seriesString", seance.SeriesToString())
 
         val _success = db.update(TABLE_NAME_SEANCES, values,

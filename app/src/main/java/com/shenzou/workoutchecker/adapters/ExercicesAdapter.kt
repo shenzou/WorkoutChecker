@@ -1,18 +1,16 @@
-package com.shenzou.workoutchecker
+package com.shenzou.workoutchecker.adapters
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.shenzou.workoutchecker.R
+import com.shenzou.workoutchecker.objects.Exercice
 import kotlinx.android.synthetic.main.item_exercice_list.view.*
 
 class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): RecyclerView.Adapter<ExercicesAdapter.ViewHolder>() {
@@ -28,23 +26,23 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.name?.text = items.get(position).name
-        holder?.description?.text = items.get(position).description
+        holder.name?.text = items[position].name
+        holder.description?.text = items[position].description
 
 
         try{
             var musclesPrime = ""
-            for((index, muscle) in items.get(position).muscles.withIndex()){
+            for((index, muscle) in items[position].muscles.withIndex()){
                 if(index>0){
                     musclesPrime += ", "
                 }
                 musclesPrime += muscle.name
             }
-            holder?.muscles?.text = musclesPrime
+            holder.muscles?.text = musclesPrime
             //holder?.muscles?.text = items.get(position).muscles.get(0).name
         }
         catch (e: Exception){
-            holder?.muscles?.text = ""
+            holder.muscles?.text = ""
         }
 
 
@@ -56,10 +54,10 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
                 }
                 musclesS += muscle.name
             }
-            holder?.musclesSecond?.text = musclesS
+            holder.musclesSecond?.text = musclesS
             //holder?.musclesSecond?.text = items.get(position).musclesSecond.get(0).name
         } catch(e: Exception){
-            holder?.musclesSecond?.text = ""
+            holder.musclesSecond?.text = ""
         }
 
         val arrayImages: ArrayList<Bitmap> = ArrayList()
@@ -67,11 +65,11 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
         val requiredWidth = 145 * ctx.resources.displayMetrics.density
         var sampleSize = (1920 / requiredWidth).toInt()
         if(sampleSize < 1) sampleSize = 1
-        var options = BitmapFactory.Options().apply {
+        val options = BitmapFactory.Options().apply {
             inSampleSize = sampleSize
         }
         //var index = 0
-        for(muscle in items.get(position).muscles){
+        for(muscle in items[position].muscles){
             val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageRes, options)
             /*if(index == 0){
                 //val originalHeight = options.outHeight
@@ -89,15 +87,15 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
             arrayImages.add(image)
             //index++
         }
-        for(muscle in items.get(position).musclesSecond){
+        for(muscle in items[position].musclesSecond){
             val image: Bitmap = BitmapFactory.decodeResource(ctx.resources, muscle.imageResSecondary, options)
             arrayImages.add(image)
         }
 
-        var finalImage: Bitmap = arrayImages.get(0)
+        var finalImage: Bitmap = arrayImages[0]
         if(arrayImages.size > 1){
             for(i in 1 until arrayImages.size){
-                finalImage = createSingleImageFromMultipleImages(finalImage, arrayImages.get(i))
+                finalImage = createSingleImageFromMultipleImages(finalImage, arrayImages[i])
             }
         }
 
@@ -107,7 +105,7 @@ class ExercicesAdapter(val items: ArrayList<Exercice>, val ctx: Context): Recycl
 
     fun createSingleImageFromMultipleImages(firstImage: Bitmap, secondImage: Bitmap): Bitmap{
         val result: Bitmap = Bitmap.createBitmap(firstImage.width, firstImage.height, firstImage.config)
-        val canvas: Canvas = Canvas(result)
+        val canvas = Canvas(result)
         canvas.drawBitmap(firstImage, 0f, 0f, null)
         canvas.drawBitmap(secondImage, 0f, 0f, null)
         return result

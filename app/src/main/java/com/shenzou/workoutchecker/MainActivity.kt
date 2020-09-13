@@ -2,10 +2,11 @@ package com.shenzou.workoutchecker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TableLayout
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.shenzou.workoutchecker.adapters.MenuAdapter
+import com.shenzou.workoutchecker.objects.Exercice
+import com.shenzou.workoutchecker.objects.Muscle
 
 class MainActivity : AppCompatActivity() {
 
@@ -84,8 +85,8 @@ class MainActivity : AppCompatActivity() {
             musclesList.add(mollets)
 
             //Initialisation des exercices
-            var tempList = ArrayList<Muscle>()
-            var tempListSecond = ArrayList<Muscle>()
+            val tempList = ArrayList<Muscle>()
+            val tempListSecond = ArrayList<Muscle>()
 
             tempList.add(fessiers)
             tempListSecond.add(abdominaux)

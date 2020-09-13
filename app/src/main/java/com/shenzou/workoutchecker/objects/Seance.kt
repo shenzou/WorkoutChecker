@@ -1,4 +1,4 @@
-package com.shenzou.workoutchecker
+package com.shenzou.workoutchecker.objects
 
 import java.io.Serializable
 import java.text.SimpleDateFormat
@@ -19,7 +19,7 @@ class Seance(val date: Date, val name: String) : Serializable {
     }
 
     fun SeriesToString(): String{
-        var series: String = ""
+        var series = ""
         if(listSeries.size>0){
             for(serie in listSeries){
                 series += serie.exercice.name + ";"
