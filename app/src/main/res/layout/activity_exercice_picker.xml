@@ -34,48 +34,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="all"
-            android:text="Tous" />
+            android:text="@string/all" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/bras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="bras"
-            android:text="Bras" />
+            android:text="@string/arms" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/epaules"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="epaules"
-            android:text="Epaules" />
+            android:text="@string/shoulders" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/dos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="dos"
-            android:text="Dos" />
+            android:text="@string/back" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/pectoraux"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="pectoraux"
-            android:text="Pectoraux" />
+            android:text="@string/pectorals" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/abdos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="abdos"
-            android:text="Abdominaux" />
+            android:text="@string/abs" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/jambes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="jambes"
-            android:text="Jambes" />
+            android:text="@string/legs" />
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

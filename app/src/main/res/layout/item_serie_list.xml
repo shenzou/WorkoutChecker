@@ -31,7 +31,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Répétitions: "
+        android:text="@string/reps"
         app:layout_constraintStart_toEndOf="@+id/musclesImage"
         app:layout_constraintTop_toBottomOf="@+id/exerciceName" />
 
@@ -47,7 +47,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Charge: "
+        android:text="@string/weight"
         app:layout_constraintStart_toEndOf="@+id/musclesImage"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 

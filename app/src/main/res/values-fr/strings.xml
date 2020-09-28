@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Workout Checker</string>
+    <string name="all">Tous</string>
+    <string name="arms">Bras</string>
+    <string name="shoulders">Epaules</string>
+    <string name="back">Dos</string>
+    <string name="pectorals">Pectoraux</string>
+    <string name="abs">Abdominaux</string>
+    <string name="legs">Jambes</string>
+    <string name="seances">Séances</string>
+    <string name="progress">Progression</string>
+    <string name="nutrition">Alimentation</string>
+    <string name="seanceModel">Modèle séance</string>
+    <string name="seanceName">"Nom de la séance: "</string>
+    <string name="seanceDate">"Date de la séance: "</string>
+    <string name="cancel">Annuler</string>
+    <string name="validate">Valider</string>
+    <string name="reps">"Répétitions: "</string>
+    <string name="weight">"Poids: "</string>
+    <string name="chooseExercice">Choisir l\'exercice</string>
+    <string name="exercice">Exercice</string>
+    <string name="description">Description</string>
+    <string name="principalMuscles">"Muscles principaux: "</string>
+    <string name="secondaryMuscles">"Muscles Secondaires: "</string>
+    <string name="product">Produit</string>
+    <string name="calories">"Calories: "</string>
+    <string name="proteins">"Protéines: "</string>
+    <string name="carbs">"Glucides: "</string>
+    <string name="exercices">" exercices"</string>
+    <string name="modify">Modifier</string>
+    <string name="delete">Supprimer</string>
+    <string name="copy">Dupliquer</string>
 </resources>

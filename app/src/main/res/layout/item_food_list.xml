@@ -16,7 +16,7 @@
         android:id="@+id/productName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product"
+        android:text="@string/product"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/iconProduct"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calories: "
+        android:text="@string/calories"
         app:layout_constraintStart_toEndOf="@+id/iconProduct"
         app:layout_constraintTop_toBottomOf="@+id/productName" />
 
@@ -49,7 +49,7 @@
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Protéines: "
+        android:text="@string/proteins"
         app:layout_constraintStart_toEndOf="@+id/iconProduct"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -73,7 +73,7 @@
         android:id="@+id/textView18"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Glucides: "
+        android:text="@string/carbs"
         app:layout_constraintStart_toEndOf="@+id/iconProduct"
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
