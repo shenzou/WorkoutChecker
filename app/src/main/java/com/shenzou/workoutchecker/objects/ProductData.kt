@@ -1,10 +1,20 @@
 package com.shenzou.workoutchecker.objects
 
-class ProductData(
-    val name: String,
-    val nutrimentsData: NutrimentsData)
+import android.graphics.Bitmap
+import java.io.Serializable
 
-class NutrimentsData(){
+class ProductData(
+    val code: String,
+    val product: Product
+): Serializable
+
+class Product(
+    val product_name_fr: String,
+    val nutriments: NutrimentsData,
+    val image_front_small_url: String
+): Serializable
+
+class NutrimentsData(): Serializable{
     val energy: Double? = null
     val proteins: Double? = null
     val carbohydrates: Double? = null

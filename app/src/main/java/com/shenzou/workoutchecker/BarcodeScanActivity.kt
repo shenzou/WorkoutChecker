@@ -1,6 +1,7 @@
 package com.shenzou.workoutchecker
 
 import android.R.attr
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -28,6 +29,10 @@ class BarcodeScanActivity : AppCompatActivity() {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                val intent = Intent()
+                intent.putExtra("product", result.contents)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data)
