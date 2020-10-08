@@ -17,4 +17,4 @@ An app in Kotlin used to follow workout trainings and nutrition.
 - Display scanned products data
 
 ## Credits
-- [Open Food Facts API](openfoodfacts.org) for providing food nutriments data
+- [Open Food Facts API](https://world.openfoodfacts.org/) for providing food nutriments data
