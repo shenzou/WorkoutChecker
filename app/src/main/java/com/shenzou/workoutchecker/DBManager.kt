@@ -6,7 +6,9 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.shenzou.workoutchecker.objects.Meal
 import com.shenzou.workoutchecker.objects.Seance
+import java.util.concurrent.CopyOnWriteArrayList
 
 class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
@@ -23,13 +25,30 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
                 + COLUMN_NAME_MODELES_NAME + " TEXT,"
                 + COLUMN_NAME_MODELES_SERIES + " TEXT"
                 + ")")
+        val CREATE_PORTION_TABLE = ("CREATE TABLE IF NOT EXISTS " +
+                TABLE_NAME_PORTION + " ("
+                + COLUMN_ID_PORTION + " INTEGER PRIMARY KEY,"
+                + COLUMN_NAME_PORTION_BARCODE + " TEXT,"
+                + COLUMN_NAME_PORTION_QUANTITY + " TEXT"
+                + ")")
+        val CREATE_MEAL_TABLE = ("CREATE TABLE IF NOT EXISTS "+
+                TABLE_NAME_MEAL + " ("
+                + COLUMN_ID_MEAL + " INTEGER PRIMARY KEY,"
+                + COLUMN_NAME_MEAL_NAME + " TEXT,"
+                + COLUMN_NAME_MEAL_EANs + " TEXT"
+                + ")")
+
         db.execSQL(CREATE_SEANCES_TABLE)
         db.execSQL(CREATE_MODELES_TABLE)
+        db.execSQL(CREATE_PORTION_TABLE)
+        db.execSQL(CREATE_MEAL_TABLE)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_SEANCES)
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_MODELES)
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME_SEANCES")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME_MODELES")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME_PORTION")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME_MEAL")
         onCreate(db)
     }
 
@@ -40,6 +59,25 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
         values.put(COLUMN_NAME_SEANCES_SERIES, seance.SeriesToString())
         val db = this.writableDatabase
         db.insert(TABLE_NAME_SEANCES, null, values)
+        db.close()
+    }
+
+    fun addPortion(barcode: String, quantity: String){
+        val values = ContentValues()
+        values.put(COLUMN_NAME_PORTION_BARCODE, barcode)
+        values.put(COLUMN_NAME_PORTION_QUANTITY, quantity)
+        val db = this.writableDatabase
+        db.insert(TABLE_NAME_PORTION, null, values)
+        db.close()
+    }
+
+    fun addMeal(meal: Meal){
+        val values = ContentValues()
+        values.put(COLUMN_NAME_MEAL_NAME, meal.name)
+        values.put(COLUMN_NAME_MEAL_DATE, meal.date)
+        values.put(COLUMN_NAME_MEAL_EANs, meal.productsEANToString())
+        val db = writableDatabase
+        db.insert(TABLE_NAME_MEAL, null, values)
         db.close()
     }
 
@@ -102,5 +140,16 @@ class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLi
         val COLUMN_NAME_MODELES_NAME = "name"
         val COLUMN_NAME_MODELES_SERIES = "series"
         val TABLE_NAME_MODELES = "modeles"
+
+        val TABLE_NAME_PORTION = "portion"
+        val COLUMN_ID_PORTION = "_id"
+        val COLUMN_NAME_PORTION_BARCODE = "barcode"
+        val COLUMN_NAME_PORTION_QUANTITY = "quantity"
+
+        val TABLE_NAME_MEAL = "meal"
+        val COLUMN_ID_MEAL = "_id"
+        val COLUMN_NAME_MEAL_NAME = "name"
+        val COLUMN_NAME_MEAL_EANs = "eans"
+        val COLUMN_NAME_MEAL_DATE = "date"
     }
 }

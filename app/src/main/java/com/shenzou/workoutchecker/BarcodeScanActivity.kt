@@ -17,6 +17,7 @@ class BarcodeScanActivity : AppCompatActivity() {
 
         val integrator = IntentIntegrator(this)
         integrator.setOrientationLocked(false)
+        integrator.setBeepEnabled(false)
         integrator.initiateScan()
 
 
