@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FoodDayActivity"></activity>
+        <activity android:name=".FoodMealActivity"></activity>
+        <activity android:name=".FoodDayActivity" />
         <activity android:name=".BarcodeScanActivity" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

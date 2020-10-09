@@ -60,7 +60,7 @@ class fragment_alimentation : Fragment() {
 
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.alert_new_dayfood, null)
             val dateSelect = dialogView.findViewById<TextView>(R.id.editTextDate)
-            dateSelect.text = SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())
+            dateSelect.text = SimpleDateFormat("yyyy/MM/dd").format(System.currentTimeMillis())
 
             val calendarButton = dialogView.findViewById<ImageButton>(R.id.calendarButton)
             calendarButton.setOnClickListener(){
@@ -72,11 +72,11 @@ class fragment_alimentation : Fragment() {
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
                         DatePickerDialog(it.context, R.style.MySpinnerDatePickerStyle,
                             { _, year, monthOfYear, dayOfMonth ->
-                                dateSelect.text = "$dayOfMonth/$monthOfYear/$year"
+                                dateSelect.text = "$year/$monthOfYear/$dayOfMonth"
                             }, y, m, d)
                     } else{
                         DatePickerDialog(it.context, { _, year, monthOfYear, dayOfMonth ->
-                            dateSelect.text = "$dayOfMonth/$monthOfYear/$year"
+                            dateSelect.text = "$year/$monthOfYear/$dayOfMonth"
                         }, y, m, d)
                     }
 

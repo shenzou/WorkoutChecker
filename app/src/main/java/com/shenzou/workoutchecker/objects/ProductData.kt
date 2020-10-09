@@ -15,6 +15,7 @@ class Product(
 ): Serializable
 
 class NutrimentsData(): Serializable{
+    //for 100g
     val energy: Double? = null
     val proteins: Double? = null
     val carbohydrates: Double? = null

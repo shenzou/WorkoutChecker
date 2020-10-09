@@ -2,10 +2,12 @@ package com.shenzou.workoutchecker.objects
 
 import java.io.Serializable
 
+class ProductElement(var productData: ProductData, var quantity: Int): Serializable
+
 class Meal(name: String, date: String): Serializable {
     var name = ""
     var date = ""
-    var listProducts: List<ProductData> = ArrayList()
+    var listProducts: ArrayList<ProductElement> = ArrayList()
 
     init{
         this.name = name
@@ -15,8 +17,16 @@ class Meal(name: String, date: String): Serializable {
     fun productsEANToString(): String{
         var eans = ""
         for(product in listProducts){
-            eans += product.code + ";"
+            eans += product.productData.code + ";"
         }
         return eans
+    }
+
+    fun productsQuantitiesToString(): String{
+        var quantities = ""
+        for(quantity in listProducts){
+            quantities += quantity.quantity.toString() + ";"
+        }
+        return quantities
     }
 }
