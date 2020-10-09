@@ -126,7 +126,7 @@ class FoodDayActivity : AppCompatActivity() {
                     var numberOfElements = listEans.size
                     if(listPortions.size < numberOfElements) numberOfElements = listPortions.size
                     for(i in 0 until numberOfElements){
-                        var productData = ProductData(listEans[i], Product("", NutrimentsData(), ""))
+                        var productData = ProductData(listEans[i], Product())
                         try{
                             var productElement = ProductElement(productData, listPortions[i].toInt())
                             tempMeal.listProducts.add(productElement)

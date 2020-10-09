@@ -8,11 +8,13 @@ class ProductData(
     val product: Product
 ): Serializable
 
-class Product(
-    val product_name_fr: String,
-    val nutriments: NutrimentsData,
-    val image_front_small_url: String
-): Serializable
+class Product(): Serializable{
+    val product_name_fr: String = ""
+    val nutriments: NutrimentsData = NutrimentsData()
+    val image_front_small_url: String = ""
+    val product_name: String = ""
+    val product_name_en: String = ""
+}
 
 class NutrimentsData(): Serializable{
     //for 100g

@@ -102,11 +102,11 @@ class fragment_seances : Fragment() {
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
                     DatePickerDialog(it.context, R.style.MySpinnerDatePickerStyle,
                         { _, year, monthOfYear, dayOfMonth ->
-                            dateSelect.text = "$dayOfMonth/$monthOfYear/$year"
+                            dateSelect.text = "$dayOfMonth/${monthOfYear+1}/$year"
                         }, y, m, d)
                     } else{
                         DatePickerDialog(it.context, { _, year, monthOfYear, dayOfMonth ->
-                            dateSelect.text = "$dayOfMonth/$monthOfYear/$year"
+                            dateSelect.text = "$dayOfMonth/${monthOfYear+1}/$year"
                         }, y, m, d)
                     }
 

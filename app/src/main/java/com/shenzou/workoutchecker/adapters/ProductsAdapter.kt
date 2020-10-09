@@ -35,7 +35,14 @@ class ProductsAdapter(val items: ArrayList<ProductElement>, val ctx: Context): R
         var glucides: Double = items[position].productData.product.nutriments.carbohydrates?.div(100) ?: 0.0
         glucides = glucides.times(quantityInt)
 
-        holder.name?.text = items[position].productData.product.product_name_fr
+        if(items[position].productData.product.product_name_fr != ""){
+            holder.name?.text = items[position].productData.product.product_name_fr
+        } else if(items[position].productData.product.product_name_en != ""){
+            holder.name?.text = items[position].productData.product.product_name_en
+        } else{
+            holder.name?.text = items[position].productData.product.product_name
+        }
+
         /*holder.calories?.text = items[position].productData.product.nutriments.energy.toString()
         holder.proteines?.text = items[position].productData.product.nutriments.proteins.toString()
         holder.glucides?.text = items[position].productData.product.nutriments.carbohydrates.toString()*/

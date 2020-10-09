@@ -14,6 +14,7 @@ interface ApiInterface {
 
     companion object{
         var BASE_URL = "https://world.openfoodfacts.org/api/v0/product/"
+        //var BASE_URL = "http://192.168.0.16:3000/products/"
 
         fun create(): ApiInterface{
             val retrofit = Retrofit.Builder()
