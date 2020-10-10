@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CalendarView
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,10 +47,18 @@ class fragment_alimentation : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //val textView: TextView = view.findViewById(R.id.textView)
 
-        val rv = view.findViewById<RecyclerView>(R.id.recyclerview)
-        rv.layoutManager = LinearLayoutManager(view.context)
+        //val rv = view.findViewById<RecyclerView>(R.id.recyclerview)
+        //rv.layoutManager = LinearLayoutManager(view.context)
         //rv.adapter =
         /**A changer **/
+
+        val calendarView = view.findViewById<CalendarView>(R.id.calendarView)
+        calendarView.setOnDateChangeListener(CalendarView.OnDateChangeListener{_, year, month, dayOfMonth ->
+            val date = year.toString() + "/" + (month+1) + "/" + dayOfMonth.toString()
+            val intent = Intent(this.context, FoodDayActivity::class.java)
+            intent.putExtra("date", date)
+            startActivity(intent)
+        })
 
 
         val buttonAdd: Button = view.findViewById(R.id.button_add)
