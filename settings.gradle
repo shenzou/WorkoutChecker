@@ -1,2 +1,3 @@
+include ':workoutcheckerwear'
 include ':app'
 rootProject.name = "Workout Checker"
