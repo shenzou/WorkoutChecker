@@ -14,7 +14,7 @@
     <string name="nutrition">Nutrition</string>
     <string name="seanceModel">Seance Model</string>
     <string name="seanceName">Seance name:</string>
-    <string name="seanceDate">"Seance date: "</string>
+    <string name="seanceDate">Seance date: </string>
     <string name="cancel">Cancel</string>
     <string name="validate">Validate</string>
     <string name="reps">Reps:</string>
@@ -25,12 +25,19 @@
     <string name="principalMuscles">Principal muscles:</string>
     <string name="secondaryMuscles">Secondary Muscles:</string>
     <string name="product">Product</string>
-    <string name="calories">"Calories: "</string>
-    <string name="proteins">"Proteins: "</string>
-    <string name="carbs">"Carbohydrates: "</string>
-    <string name="exercices">" exercises"</string>
+    <string name="calories">Calories: </string>
+    <string name="proteins">Proteins: </string>
+    <string name="carbs">Carbohydrates: </string>
+    <string name="exercices"> exercises</string>
     <string name="modify">Modify</string>
     <string name="delete">Delete</string>
     <string name="copy">Copy</string>
-    <string name="foodDate">Day:</string>
+    <string name="foodDate">Day: </string>
+    <string name="fat">Fat: </string>
+    <string name="satured">Saturated: </string>
+    <string name="daily">Daily: </string>
+    <string name="prots">Proteins</string>
+    <string name="cals">Energy</string>
+    <string name="carbss">Carbohydrates</string>
+    <string name="fats">Fat</string>
 </resources>

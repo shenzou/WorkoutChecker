@@ -31,4 +31,11 @@
     <string name="delete">Supprimer</string>
     <string name="copy">Dupliquer</string>
     <string name="foodDate">"Jour: "</string>
+    <string name="fat">"Acides gras: "</string>
+    <string name="satured">"Dont saturés: "</string>
+    <string name="daily">"Journalier: "</string>
+    <string name="prots">Protéines</string>
+    <string name="cals">Calories</string>
+    <string name="carbss">Glucides</string>
+    <string name="fats">Acides gras</string>
 </resources>
