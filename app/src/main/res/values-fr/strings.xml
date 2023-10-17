@@ -22,7 +22,7 @@
     <string name="description">Description</string>
     <string name="principalMuscles">"Muscles principaux: "</string>
     <string name="secondaryMuscles">"Muscles Secondaires: "</string>
-    <string name="product">Produit</string>
+    <string name="product">Produit: </string>
     <string name="calories">"Calories: "</string>
     <string name="proteins">"Protéines: "</string>
     <string name="carbs">"Glucides: "</string>

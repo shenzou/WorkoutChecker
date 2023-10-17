@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.shenzou.workoutchecker.objects.Meal
 import com.shenzou.workoutchecker.objects.Seance
-import java.util.concurrent.CopyOnWriteArrayList
 
 class DBManager(context: Context, factory: SQLiteDatabase.CursorFactory?) : SQLiteOpenHelper(context, DATABASE_NAME, factory, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {

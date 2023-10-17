@@ -3,12 +3,13 @@ package com.shenzou.workoutchecker
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shenzou.workoutchecker.adapters.ProductsAdapter
@@ -19,7 +20,6 @@ import com.shenzou.workoutchecker.objects.ProductElement
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 
 class FoodMealActivity : AppCompatActivity() {
 
@@ -47,15 +47,17 @@ class FoodMealActivity : AppCompatActivity() {
             val annuler = dialogView.findViewById<Button>(R.id.cancelButton)
             val valider = dialogView.findViewById<Button>(R.id.validateButton)
             val portion = dialogView.findViewById<EditText>(R.id.portion)
-            var product = it
+            val produit = dialogView.findViewById<TextView>(R.id.productName)
+            val product = it
 
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Modifier portion")
             builder.setView(dialogView)
+            produit.text = it.productData.product.product_name
             val alertDialog = builder.create()
             alertDialog.show()
 
-            valider.setOnClickListener(){
+            valider.setOnClickListener{
                 product.quantity = portion.text.toString().toInt()
                 adapter.notifyDataSetChanged()
                 alertDialog.dismiss()
@@ -68,11 +70,19 @@ class FoodMealActivity : AppCompatActivity() {
         rv.adapter = adapter
 
 
-        val buttonAdd: Button = findViewById(R.id.button_add)
-        buttonAdd.setOnClickListener(){
+        val buttonScan: Button = findViewById(R.id.button_scan)
+        buttonScan.setOnClickListener{
             val intent = Intent(this, BarcodeScanActivity::class.java)
             startActivityForResult(intent, SCAN_RESULT_CODE)
+        }
 
+        val buttonAdd: Button = findViewById(R.id.button_add)
+        buttonAdd.setOnClickListener{
+            val addView = LayoutInflater.from(this).inflate(R.layout.alert_new_food, null)
+            AlertDialog.Builder(this)
+                .setView(addView)
+                .create()
+                .show()
         }
     }
 
@@ -90,7 +100,6 @@ class FoodMealActivity : AppCompatActivity() {
             Log.d("Infos", "Added new meal to db")
         }
 
-
         super.onDestroy()
     }
 
@@ -106,40 +115,22 @@ class FoodMealActivity : AppCompatActivity() {
                 val apiInterface = ApiInterface.create().getProduct("$productId.json")
 
                 apiInterface.enqueue(object : Callback<ProductData> {
-                    override fun onResponse(call: Call<ProductData>?, response: Response<ProductData>?) {
-
-                        if(response?.body() != null){
-                            try{
-                                val prod: ProductData = response.body() as ProductData
-                                if(prod.code != "") {
-                                    val newProdElement = ProductElement(prod, 100)
-                                    meal.listProducts.add(newProdElement)
-                                    adapter.notifyDataSetChanged()
-                                }
+                    override fun onResponse(call: Call<ProductData>, response: Response<ProductData>) {
+                        if(response.body() != null){
+                            val prod: ProductData = response.body() as ProductData
+                            if(prod.code != "") {
+                                val newProdElement = ProductElement(prod, 100)
+                                meal.listProducts.add(newProdElement)
+                                adapter.notifyDataSetChanged()
                             }
-                            catch(e: Exception){
-
-                            }
-                            //textView.text = response.body()!!.product.product_name_fr
-                            //textView.text = textView.text as String + "\n" + response.body()!!.product.nutriments.energy
-
                         }
-                        /*if(response?.body() != null)
-                            recyclerAdapter.setMovieListItems(response.body()!!)*/
                     }
 
-                    override fun onFailure(call: Call<ProductData>?, t: Throwable?) {
-
+                    override fun onFailure(call: Call<ProductData>, t: Throwable) {
+                        TODO("Not yet implemented")
                     }
 
                 })
-
-                // Get String data from Intent
-                //val returnString = data!!.getStringExtra("keyName")
-
-                // Set text view with string
-                //val textView = findViewById(R.id.textView) as TextView
-                //textView.text = returnString
             }
         }
     }

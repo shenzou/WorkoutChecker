@@ -2,10 +2,10 @@ package com.shenzou.workoutchecker
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,91 +65,93 @@ class ExercicePicker : AppCompatActivity() {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 Log.d("Tab", "New tab selected")
                 val exos: ArrayList<Exercice> = ArrayList()
-                if(tab.text == "Tous"){
-                    Log.d("Tab", "Tous")
-                    for(exo in MainActivity.exercicesList){
-                        exos.add(exo)
+                when (tab.text) {
+                    "Tous" -> {
+                        Log.d("Tab", "Tous")
+                        for(exo in MainActivity.exercicesList){
+                            exos.add(exo)
+                        }
                     }
-                }
-                else if(tab.text == "Bras"){
-                    Log.d("Tab", "Bras")
-                    for(exercice in MainActivity.exercicesList){
-                        for(muscle in exercice.muscles){
-                            if(muscle.name == "Biceps"
-                                || muscle.name == "Triceps"
-                                || muscle.name == "Avant-bras"
-                            ){
-                                exos.add(exercice)
-                                break
+                    "Bras" -> {
+                        Log.d("Tab", "Bras")
+                        for(exercice in MainActivity.exercicesList){
+                            for(muscle in exercice.muscles){
+                                if(muscle.name == "Biceps"
+                                    || muscle.name == "Triceps"
+                                    || muscle.name == "Avant-bras"
+                                ){
+                                    exos.add(exercice)
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                else if(tab.text == "Epaules"){
-                    Log.d("Tab", "Epaules")
-                    for(exercice in MainActivity.exercicesList){
-                        for(muscle in exercice.muscles){
-                            if(muscle.name == "Epaules"
-                                || muscle.name == "Trapezes"
-                            ){
-                                exos.add(exercice)
-                                break
+                    "Epaules" -> {
+                        Log.d("Tab", "Epaules")
+                        for(exercice in MainActivity.exercicesList){
+                            for(muscle in exercice.muscles){
+                                if(muscle.name == "Epaules"
+                                    || muscle.name == "Trapezes"
+                                ){
+                                    exos.add(exercice)
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                else if(tab.text == "Dos"){
-                    Log.d("Tab", "Dos")
-                    for(exercice in MainActivity.exercicesList){
-                        for(muscle in exercice.muscles){
-                            if(muscle.name == "Dorsaux"
-                                || muscle.name == "Lombaires"
-                            ){
-                                exos.add(exercice)
-                                break
+                    "Dos" -> {
+                        Log.d("Tab", "Dos")
+                        for(exercice in MainActivity.exercicesList){
+                            for(muscle in exercice.muscles){
+                                if(muscle.name == "Dorsaux"
+                                    || muscle.name == "Lombaires"
+                                ){
+                                    exos.add(exercice)
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                else if(tab.text == "Pectoraux"){
-                    Log.d("Tab", "Pecs")
-                    for(exercice in MainActivity.exercicesList){
-                        for(muscle in exercice.muscles){
-                            if(muscle.name == "Pectoraux"){
-                                exos.add(exercice)
-                                break
+                    "Pectoraux" -> {
+                        Log.d("Tab", "Pecs")
+                        for(exercice in MainActivity.exercicesList){
+                            for(muscle in exercice.muscles){
+                                if(muscle.name == "Pectoraux"){
+                                    exos.add(exercice)
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                else if(tab.text == "Abdominaux"){
-                    Log.d("Tab", "Abdos")
-                    for(exercice in MainActivity.exercicesList){
-                        for(muscle in exercice.muscles){
-                            if(muscle.name == "Abdominaux"){
-                                exos.add(exercice)
-                                break
+                    "Abdominaux" -> {
+                        Log.d("Tab", "Abdos")
+                        for(exercice in MainActivity.exercicesList){
+                            for(muscle in exercice.muscles){
+                                if(muscle.name == "Abdominaux"){
+                                    exos.add(exercice)
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                else if(tab.text == "Jambes"){
-                    Log.d("Tab", "Jambes")
-                    for(exercice in MainActivity.exercicesList){
-                        for(muscle in exercice.muscles){
-                            if(muscle.name == "Quadriceps"
-                                || muscle.name == "Fessiers"
-                                || muscle.name == "Ischio-jambiers"
-                                || muscle.name == "Mollets"
-                            ){
-                                exos.add(exercice)
-                                break
+                    "Jambes" -> {
+                        Log.d("Tab", "Jambes")
+                        for(exercice in MainActivity.exercicesList){
+                            for(muscle in exercice.muscles){
+                                if(muscle.name == "Quadriceps"
+                                    || muscle.name == "Fessiers"
+                                    || muscle.name == "Ischio-jambiers"
+                                    || muscle.name == "Mollets"
+                                ){
+                                    exos.add(exercice)
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                else{
-                    Log.d("None", tab.tag.toString())
+                    else -> {
+                        Log.d("None", tab.tag.toString())
+                    }
                 }
                 adapter = ExercicesAdapter(exos, context)
                 adapter.onItemClick = {exercice ->
@@ -165,16 +167,13 @@ class ExercicePicker : AppCompatActivity() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-
+                TODO("Not yet implemented")
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-
+                TODO("Not yet implemented")
             }
         })
-
-
-        //initAdapter(poids, reps, MainActivity.exercicesList)
 
 
 

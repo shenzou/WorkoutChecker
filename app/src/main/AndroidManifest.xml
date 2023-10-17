@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.shenzou.workoutchecker">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
 
@@ -15,19 +14,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FoodMealActivity"></activity>
-        <activity android:name=".FoodDayActivity" />
-        <activity android:name=".BarcodeScanActivity" />
+        <activity android:name=".FoodMealActivity"
+            android:exported="false"/>
+        <activity android:name=".FoodDayActivity" android:exported="false"/>
+        <activity android:name=".BarcodeScanActivity" android:exported="false"/>
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
-            tools:replace="screenOrientation" />
-        <activity android:name=".ExercicePicker" />
-        <activity android:name=".EmptyActivity" />
+            tools:replace="screenOrientation" android:exported="false"/>
+        <activity android:name=".ExercicePicker" android:exported="false"/>
+        <activity android:name=".EmptyActivity" android:exported="false"/>
         <activity
             android:name=".SeanceActivity"
-            android:label="Séance" />
-        <activity android:name=".MainActivity">
+            android:label="Séance"
+            android:exported="false"/>
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

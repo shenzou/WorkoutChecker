@@ -3,21 +3,24 @@ package com.shenzou.workoutchecker
 import android.app.AlertDialog
 import android.content.Intent
 import android.database.Cursor
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shenzou.workoutchecker.adapters.MealsAdapter
 import com.shenzou.workoutchecker.apis.ApiInterface
-import com.shenzou.workoutchecker.objects.*
+import com.shenzou.workoutchecker.objects.Meal
+import com.shenzou.workoutchecker.objects.Product
+import com.shenzou.workoutchecker.objects.ProductData
+import com.shenzou.workoutchecker.objects.ProductElement
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
-import kotlin.collections.ArrayList
 
 class FoodDayActivity : AppCompatActivity() {
 
@@ -63,7 +66,7 @@ class FoodDayActivity : AppCompatActivity() {
             alertDialog.show()
 
             valider.setOnClickListener(){
-                val meal: Meal = Meal(name.text.toString(), date.text.toString())
+                val meal = Meal(name.text.toString(), date.text.toString())
 
                 val intent = Intent(this, FoodMealActivity::class.java)
                 intent.putExtra("meal", meal)
@@ -76,7 +79,7 @@ class FoodDayActivity : AppCompatActivity() {
             annuler.setOnClickListener(){
                 alertDialog.cancel()
             }
-
+            adapter.notifyDataSetChanged()
 
         }
 
@@ -85,13 +88,13 @@ class FoodDayActivity : AppCompatActivity() {
             intent.putExtra("meal", it)
             intent.putExtra("exists", true)
             startActivity(intent)
+            adapter.notifyDataSetChanged()
         }
     }
 
     fun RetrieveMeals(){
         val dbHandler = DBManager(this, null)
         val cursor: Cursor? = dbHandler.findMealsAtDate(date)
-        //val cursor: Cursor? = dbHandler.findAllMealsSorted(0)
 
         if(cursor != null && cursor.moveToFirst()){
             Log.d("Found", "meal")
@@ -111,24 +114,22 @@ class FoodDayActivity : AppCompatActivity() {
 
                 if(eans.length > 1){
                     val listEans = eans.split(
-                        delimiters = *arrayOf(";"),
+                        delimiters = arrayOf(";"),
                         ignoreCase = false,
                         limit = 0
                     )
                     val listPortions = portions.split(
-                        delimiters = *arrayOf(";"),
+                        delimiters = arrayOf(";"),
                         ignoreCase = false,
                         limit = 0
                     )
 
-                    var listProds: ArrayList<ProductElement> = ArrayList()
-
                     var numberOfElements = listEans.size
                     if(listPortions.size < numberOfElements) numberOfElements = listPortions.size
                     for(i in 0 until numberOfElements){
-                        var productData = ProductData(listEans[i], Product())
+                        val productData = ProductData(listEans[i], Product())
                         try{
-                            var productElement = ProductElement(productData, listPortions[i].toInt())
+                            val productElement = ProductElement(productData, listPortions[i].toInt())
                             tempMeal.listProducts.add(productElement)
                         } catch(e: Exception){
 
@@ -149,27 +150,15 @@ class FoodDayActivity : AppCompatActivity() {
         val apiInterface = ApiInterface.create().getProduct("${productElement.productData.code}.json")
 
         apiInterface.enqueue(object : Callback<ProductData> {
-            override fun onResponse(call: Call<ProductData>?, response: Response<ProductData>?) {
+            override fun onResponse(call: Call<ProductData>, response: Response<ProductData>) {
+                if(response.body() != null){
+                    val prod: ProductData = response.body() as ProductData
+                    if(prod.code != "") {
 
-                if(response?.body() != null){
-                    try{
-                        val prod: ProductData = response.body() as ProductData
-                        if(prod.code != "") {
-
-                            productElement.productData = prod
-                            //meal.listProducts.add(newProdElement)
-                            adapter.notifyDataSetChanged()
-                        }
+                        productElement.productData = prod
+                        adapter.notifyDataSetChanged()
                     }
-                    catch(e: Exception){
-
-                    }
-                    //textView.text = response.body()!!.product.product_name_fr
-                    //textView.text = textView.text as String + "\n" + response.body()!!.product.nutriments.energy
-
                 }
-                /*if(response?.body() != null)
-                    recyclerAdapter.setMovieListItems(response.body()!!)*/
             }
 
             override fun onFailure(call: Call<ProductData>?, t: Throwable?) {

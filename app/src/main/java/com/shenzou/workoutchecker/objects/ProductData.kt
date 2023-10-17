@@ -1,6 +1,5 @@
 package com.shenzou.workoutchecker.objects
 
-import android.graphics.Bitmap
 import java.io.Serializable
 
 class ProductData(
@@ -8,7 +7,7 @@ class ProductData(
     val product: Product
 ): Serializable
 
-class Product(): Serializable{
+class Product: Serializable{
     val product_name_fr: String = ""
     val nutriments: NutrimentsData = NutrimentsData()
     val image_front_small_url: String = ""
@@ -16,7 +15,7 @@ class Product(): Serializable{
     val product_name_en: String = ""
 }
 
-class NutrimentsData(): Serializable{
+class NutrimentsData: Serializable{
     //for 100g
     val energy: Double? = null
     val proteins: Double? = null

@@ -1,7 +1,7 @@
 package com.shenzou.workoutchecker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 
 class EmptyActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shenzou.workoutchecker.R
 import com.shenzou.workoutchecker.objects.Meal
 import kotlinx.android.synthetic.main.item_meal_list.view.*
-import java.lang.Exception
 import kotlin.math.roundToInt
-import kotlin.time.times
 
 class MealsAdapter(val items: ArrayList<Meal>, val ctx: Context): RecyclerView.Adapter<MealsAdapter.ViewHolder>() {
 
@@ -32,10 +30,8 @@ class MealsAdapter(val items: ArrayList<Meal>, val ctx: Context): RecyclerView.A
         for(product in items[position].listProducts){
             nbProducts++
 
-            try{
-                val energy: Int = product.productData.product.nutriments.energy?.roundToInt()!!
-                toEnergy += product.quantity.times(energy).div(100)
-            } catch(e: Exception){}
+            val energy: Int = product.productData.product.nutriments.energy?.roundToInt()!!
+            toEnergy += product.quantity.times(energy).div(100)
 
         }
         holder.totalProducts?.text = nbProducts.toString()

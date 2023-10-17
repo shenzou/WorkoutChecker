@@ -3,19 +3,20 @@ package com.shenzou.workoutchecker
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 import com.shenzou.workoutchecker.adapters.SeriesAdapter
 import com.shenzou.workoutchecker.objects.Exercice
 import com.shenzou.workoutchecker.objects.Seance
 import com.shenzou.workoutchecker.objects.Serie
 import kotlinx.android.synthetic.main.item_serie_list.view.*
 import java.io.Serializable
-import java.lang.Exception
 
 class SeanceActivity : AppCompatActivity(), Serializable {
 
@@ -30,14 +31,6 @@ class SeanceActivity : AppCompatActivity(), Serializable {
         seance = intent.getSerializableExtra("seance") as? Seance
         title = seance!!.name
 
-
-        /*for(exo in MainActivity.exercicesList){
-            Log.d("Exercice", exo.name)
-            for(muscle in exo.muscles){
-                Log.d("Muscles", muscle.name)
-                Log.d("Image", muscle.imageRes.toString())
-            }
-        }*/
         Log.d("series", seance!!.listSeries.size.toString())
 
         adapter = SeriesAdapter(seance!!.listSeries, this)
@@ -66,7 +59,9 @@ class SeanceActivity : AppCompatActivity(), Serializable {
                 writeToDb(seance!!)
             }
             view.copyButton.setOnClickListener(){
-                seance!!.listSeries.add(seance!!.listSeries.get(i))
+                val serie = Serie(seance!!.listSeries.elementAt(i).exercice, seance!!.listSeries.elementAt(i).reps)
+                serie.poids = seance!!.listSeries.elementAt(i).poids
+                seance!!.listSeries.add(serie)
                 adapter.notifyDataSetChanged()
                 writeToDb(seance!!)
             }
@@ -110,42 +105,34 @@ class SeanceActivity : AppCompatActivity(), Serializable {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Check that it is the SecondActivity with an OK result
-        if (requestCode == EXERCICE_RESULT_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == EXERCICE_RESULT_CODE && resultCode == Activity.RESULT_OK) {
 
-                val returnExercice: Exercice = data!!.getSerializableExtra("exercice") as Exercice
-                val returnPoids: String? = data.getStringExtra("poids")
-                val returnReps: String? = data.getStringExtra("reps")
+            val returnExercice: Exercice = data!!.getSerializableExtra("exercice") as Exercice
+            val returnPoids: String? = data.getStringExtra("poids")
+            val returnReps: String? = data.getStringExtra("reps")
 
-                var poidsDouble: Double
-                try{
-                    poidsDouble = returnPoids?.toDouble() ?: 0.0
-                } catch (e: Exception){
-                    poidsDouble = 0.0
-                }
-                var repsInt: Int
-                try{
-                    repsInt = returnReps?.toInt() ?: 0
-                } catch (e: Exception){
-                    repsInt = 0
-                }
-
-                val serie = Serie(returnExercice, repsInt)
-                serie.poids = poidsDouble
-
-                seance!!.listSeries.add(serie)
-                Log.d("series + add", seance!!.listSeries.size.toString())
-
-                writeToDb(seance!!)
-                adapter.notifyDataSetChanged()
-
-                // Get String data from Intent
-                //val returnString = data!!.getStringExtra("keyName")
-
-                // Set text view with string
-                //val textView = findViewById(R.id.textView) as TextView
-                //textView.text = returnString
+            var poidsDouble: Double
+            try{
+                poidsDouble = returnPoids?.toDouble() ?: 0.0
+            } catch (e: Exception){
+                poidsDouble = 0.0
             }
+            var repsInt: Int
+            try{
+                repsInt = returnReps?.toInt() ?: 0
+            } catch (e: Exception){
+                repsInt = 0
+            }
+
+            val serie = Serie(returnExercice, repsInt)
+            serie.poids = poidsDouble
+
+            seance!!.listSeries.add(serie)
+            Log.d("series + add", seance!!.listSeries.size.toString())
+
+            writeToDb(seance!!)
+            adapter.notifyDataSetChanged()
+
         }
     }
 

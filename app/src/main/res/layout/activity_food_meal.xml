@@ -21,6 +21,14 @@
         android:layout_height="@dimen/box_size"
         android:background="@drawable/add_circle_blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/button_scan" />
+
+    <Button
+        android:id="@+id/button_scan"
+        android:layout_width="@dimen/box_size"
+        android:layout_height="@dimen/box_size"
+        android:background="@drawable/baseline_qr_code_scanner_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,9 @@
 package com.shenzou.workoutchecker
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +11,7 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,12 +41,6 @@ class fragment_alimentation : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //val textView: TextView = view.findViewById(R.id.textView)
-
-        //val rv = view.findViewById<RecyclerView>(R.id.recyclerview)
-        //rv.layoutManager = LinearLayoutManager(view.context)
-        //rv.adapter =
-        /**A changer **/
 
         val calendarView = view.findViewById<CalendarView>(R.id.calendarView)
         calendarView.setOnDateChangeListener(CalendarView.OnDateChangeListener{_, year, month, dayOfMonth ->
@@ -63,9 +53,6 @@ class fragment_alimentation : Fragment() {
 
         val buttonAdd: Button = view.findViewById(R.id.button_add)
         buttonAdd.setOnClickListener(){
-            /** A changer **/
-            /*val intent = Intent(this.context, FoodDayActivity::class.java)
-            startActivity(intent)*/
 
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.alert_new_dayfood, null)
             val dateSelect = dialogView.findViewById<TextView>(R.id.editTextDate)
@@ -74,9 +61,9 @@ class fragment_alimentation : Fragment() {
             val calendarButton = dialogView.findViewById<ImageButton>(R.id.calendarButton)
             calendarButton.setOnClickListener(){
                 val c = Calendar.getInstance()
-                val y = c.get(Calendar.YEAR)
-                val m = c.get(Calendar.MONTH)
-                val d = c.get(Calendar.DAY_OF_MONTH)
+                val y = c[Calendar.YEAR]
+                val m = c[Calendar.MONTH]
+                val d = c[Calendar.DAY_OF_MONTH]
                 val dp: DatePickerDialog =
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
                         DatePickerDialog(it.context, R.style.MySpinnerDatePickerStyle,

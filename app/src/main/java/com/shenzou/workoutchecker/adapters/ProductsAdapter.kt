@@ -1,18 +1,13 @@
 package com.shenzou.workoutchecker.adapters
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.shenzou.workoutchecker.R
-import com.shenzou.workoutchecker.objects.ProductData
 import com.shenzou.workoutchecker.objects.ProductElement
 import kotlinx.android.synthetic.main.item_food_list.view.*
 import kotlin.math.roundToInt
@@ -48,8 +43,7 @@ class ProductsAdapter(val items: ArrayList<ProductElement>, val ctx: Context): R
         fat = fat.times(quantityInt)
         fat = ((fat * 100).roundToInt() /100.00)
 
-        var saturated: Double = items[position].productData.product.nutriments.saturated_fat?.div(100) ?: 0.0
-        saturated = fat.times(quantityInt)
+        var saturated: Double = fat.times(quantityInt)
         saturated = ((saturated * 100).roundToInt() /100.00)
 
         if(items[position].productData.product.product_name_fr != ""){

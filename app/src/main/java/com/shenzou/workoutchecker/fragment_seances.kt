@@ -1,5 +1,6 @@
 package com.shenzou.workoutchecker
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
@@ -7,21 +8,19 @@ import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import com.shenzou.workoutchecker.adapters.SeancesAdapter
 import com.shenzou.workoutchecker.objects.Exercice
 import com.shenzou.workoutchecker.objects.Muscle
 import com.shenzou.workoutchecker.objects.Seance
 import com.shenzou.workoutchecker.objects.Serie
 import kotlinx.android.synthetic.main.fragment_seances.*
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,38 +54,25 @@ class fragment_seances : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         viewOfLayout = inflater.inflate(R.layout.fragment_seances, container, false)
         return viewOfLayout
     }
 
-    /*override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        if(context != null){
-            val resources = context.resources
-
-        }
-    }*/
 
     override fun onResume() {
         super.onResume()
         context?.let { populateArraySeances(it) }
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*val seancesList: List<Seance>? = null
-        csvReader().open("Seances.csv"){
-            readAllAsSequence().forEach { row ->
-
-            }
-        }*/
         adapter = SeancesAdapter(seancesArray, view.context)
 
-        button_add?.setOnClickListener() { it ->
+        button_add?.setOnClickListener { it ->
             val dialogView = LayoutInflater.from(it.context).inflate(R.layout.alert_new_seance, null)
             val dateSelect = dialogView.findViewById<TextView>(R.id.editTextDate)
             dateSelect.text = SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())
@@ -95,9 +81,9 @@ class fragment_seances : Fragment() {
             val calendarButton = dialogView.findViewById<ImageButton>(R.id.calendarButton)
             calendarButton.setOnClickListener(){
                 val c = Calendar.getInstance()
-                val y = c.get(Calendar.YEAR)
-                val m = c.get(Calendar.MONTH)
-                val d = c.get(Calendar.DAY_OF_MONTH)
+                val y = c[Calendar.YEAR]
+                val m = c[Calendar.MONTH]
+                val d = c[Calendar.DAY_OF_MONTH]
                 val dp:DatePickerDialog =
                     if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
                     DatePickerDialog(it.context, R.style.MySpinnerDatePickerStyle,
@@ -123,10 +109,6 @@ class fragment_seances : Fragment() {
                 if(validateData(nameText.text.toString())){
                     val parser = SimpleDateFormat("dd/MM/yyyy")
                     val date: Date = parser.parse(dateSelect.text.toString())
-                    /*if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", null)
-                        val date = LocalDate.parse(dateSelect.text, formatter)
-                    }*/
                     val seance = Seance(date, nameText.text.toString())
                     val dbHandler = DBManager(view.context, null)
                     dbHandler.addSeance(seance)
@@ -177,7 +159,7 @@ class fragment_seances : Fragment() {
 
                 if(series.length > 11){
                     val listSeries = series.split(
-                        delimiters = *arrayOf("!"),
+                        delimiters = arrayOf("!"),
                         ignoreCase = false,
                         limit = 0
                     )
@@ -188,7 +170,7 @@ class fragment_seances : Fragment() {
                         Log.d("Serie", serie)
                         if(serie.length>11){
                             val champs = serie.split(
-                                delimiters = *arrayOf(";"),
+                                delimiters = arrayOf(";"),
                                 ignoreCase = false,
                                 limit = 0
                             )
@@ -204,13 +186,13 @@ class fragment_seances : Fragment() {
                             val muscles: ArrayList<Muscle> = ArrayList<Muscle>()
 
                             val musclesNoRes = champs[3].split(
-                                delimiters = *arrayOf(","),
+                                delimiters = arrayOf(","),
                                 ignoreCase = false,
                                 limit = 0
                             )
                             for(muscle in musclesNoRes){
                                 for(muscleComplet in MainActivity.musclesList){
-                                    if(muscle.equals(muscleComplet.name)){
+                                    if(muscle == muscleComplet.name){
                                         muscles.add(muscleComplet)
                                     }
                                 }
@@ -219,13 +201,13 @@ class fragment_seances : Fragment() {
                             val musclesSecond: ArrayList<Muscle> = ArrayList<Muscle>()
 
                             val musclesSecondNoRes = champs[4].split(
-                                delimiters = *arrayOf(","),
+                                delimiters = arrayOf(","),
                                 ignoreCase = false,
                                 limit = 0
                             )
                             for(muscle in musclesSecondNoRes){
                                 for(muscleComplet in MainActivity.musclesList){
-                                    if(muscle.equals(muscleComplet.name)){
+                                    if(muscle == muscleComplet.name){
                                         musclesSecond.add(muscleComplet)
                                     }
                                 }
@@ -266,7 +248,7 @@ class fragment_seances : Fragment() {
 
     private fun validateData(name: String):Boolean{
         var valid = true
-        if(name.equals("")){
+        if(name == ""){
             valid = false
         }
         return valid

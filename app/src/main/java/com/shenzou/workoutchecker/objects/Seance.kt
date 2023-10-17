@@ -3,7 +3,6 @@ package com.shenzou.workoutchecker.objects
 import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Seance(val date: Date, val name: String) : Serializable {
     val dateStr: String
@@ -20,7 +19,7 @@ class Seance(val date: Date, val name: String) : Serializable {
 
     fun SeriesToString(): String{
         var series = ""
-        if(listSeries.size>0){
+        if(listSeries.isNotEmpty()){
             for(serie in listSeries){
                 series += serie.exercice.name + ";"
                 series += serie.exercice.description + ";"

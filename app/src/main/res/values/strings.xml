@@ -24,7 +24,7 @@
     <string name="description">Description</string>
     <string name="principalMuscles">Principal muscles:</string>
     <string name="secondaryMuscles">Secondary Muscles:</string>
-    <string name="product">Product</string>
+    <string name="product">Product: </string>
     <string name="calories">Calories: </string>
     <string name="proteins">Proteins: </string>
     <string name="carbs">Carbohydrates: </string>

@@ -1,7 +1,7 @@
 package com.shenzou.workoutchecker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.shenzou.workoutchecker.adapters.MenuAdapter
@@ -38,11 +38,11 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-
+                TODO("Not yet implemented")
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-
+                TODO("Not yet implemented")
             }
         })
     }
